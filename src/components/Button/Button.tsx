@@ -10,10 +10,10 @@ export default function Button({className, variant, ...props}: ButtonProps) {
   )
 }
 
-const buttonVariants = cva("py-2 px-6 font-semibold rounded-md transition-colors duration-200 text-white cursor-pointer", {
+const buttonVariants = cva("py-2 px-6 font-semibold rounded-md transition-colors duration-200 text-white cursor-pointer border-2 border-white", {
     variants: {
         variant: {
-            primary: "bg-lowOrange hover:bg-midOrange",
+            primary: "bg-[rgba(235, 173, 124, 0.75)] hover:bg-midOrange",
             secondary: "bg-darkOrange hover:bg-brown",
         }
     },
