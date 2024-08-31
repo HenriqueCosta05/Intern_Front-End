@@ -1,0 +1,22 @@
+{
+  "payload": [
+    {
+      "id": 1,
+      "icon": "Client",
+      "title": "+50 usuarios ativos",
+      "description": "Mais de 50 usuários ativos já estão transformando sua produtividade com nosso app de gerenciamento de tarefas. Junte-se a eles e otimize seu dia a dia!"
+    },
+    {
+      "id": 2,
+      "icon": "Easy",
+      "title": "Fácil de usar",
+      "description": "Gerencie suas tarefas de forma simples e rápida com nossa interface intuitiva, feita para facilitar sua rotina sem complicações."
+    },
+    {
+      "id": 3,
+      "icon": "Quick",
+      "title": "Rápido e intuitivo",
+      "description": "Gerencie suas tarefas de forma ágil e sem complicações. Nossa interface intuitiva permite que você organize seu dia em poucos cliques!"
+    }
+  ]
+}

@@ -1,14 +1,5 @@
-import { ThemeProvider } from "@emotion/react"
-import { CustomButton } from "./components"
-import theme from "./theme/theme"
+import { Home } from "./pages";
 
-function App() {
-
-  return (
-    <ThemeProvider theme={theme}>
-      <CustomButton>Hello World</CustomButton>
-    </ThemeProvider>
-  )
+export default function App() {
+  return <Home />;
 }
-
-export default App
