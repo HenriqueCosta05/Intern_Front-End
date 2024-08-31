@@ -3,6 +3,6 @@ interface RootProps extends React.HTMLProps<HTMLFormElement> {
 }
 export default function Root({children, className, onSubmit, ...props}: RootProps) {
   return (
-      <form className={className} onSubmit={onSubmit}>{children}</form>
+      <form className={className} onSubmit={onSubmit} data-testid="form">{children}</form>
   )
 }

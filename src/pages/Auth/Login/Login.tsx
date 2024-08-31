@@ -11,7 +11,7 @@ export default function Login() {
           Seja <span className="text-amber-600">bem-vindo(a)</span> de volta!
         </h1>
         <Form.Root
-          className="lg:w-1/2 h-4/6 drop-shadow-md bg-white lg:absolute lg:top-10 lg:right-10 z-20 rounded-lg w-11/12 h-full lg:p-16 p-4 space-y-4 m-auto"
+          className="lg:w-1/2 h-4/6 drop-shadow-md bg-white lg:absolute lg:top-10 lg:right-10 z-20 rounded-lg w-11/12 lg:p-16 p-4 space-y-4 m-auto"
           method="POST"
         >
           <h2 className="text-4xl font-bold text-brown w-fit mx-auto">Login</h2>
@@ -22,7 +22,10 @@ export default function Login() {
             type="email"
             placeholder="Digite aqui seu e-mail..."
             id="email"
-            className="placeholder:font-extrabold indent-4"
+            className="placeholder:font-extrabold indent-4 outline-2 outline-lowOrange"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            title="Digite um e-mail válido"
+            required
           />
           <Form.Label htmlFor="password" className="font-extrabold block">
             Senha
@@ -30,7 +33,11 @@ export default function Login() {
           <Form.Input
             type="password"
             placeholder="Digite aqui sua senha..."
-            className="placeholder:font-extrabold indent-4"
+            className="placeholder:font-extrabold indent-4 outline-2 outline-lowOrange"
+            id="password"
+            pattern=".{6,}"
+            title="A senha deve ter no mínimo 6 caracteres"
+            required
           />
           <Form.Button type="submit" className="bg-brown">Entrar</Form.Button>
         </Form.Root>
