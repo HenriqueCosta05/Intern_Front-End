@@ -8,7 +8,7 @@ export default function Root({ className, children, ...props }: CardProps) {
       data-testid="card"
       className={cn(
         className,
-        "bg-[rgba(236, 173, 124, 0.75)] border-2 border-white rounded-lg w-4/5"
+        "bg-[rgba(236, 173, 124, 0.75)] border-[0.5px] border-white rounded-lg w-11/12 md:w-1/2 lg:w-1/4 p-4 flex flex-col items-center justify-center"
       )}
       >
           {children}

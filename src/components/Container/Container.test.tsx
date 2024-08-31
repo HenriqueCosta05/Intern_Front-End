@@ -3,7 +3,7 @@ import { Container } from "..";
 
 describe('Container', () => {
     it('should render', () => {
-        const { container } = render(<Container children={} />);
+        const { container } = render(<Container><div>Teste</div></Container>);
         expect(container).toBeInTheDocument();
     });
     

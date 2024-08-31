@@ -6,7 +6,7 @@ describe('Button component', () => {
         render(<Button>Primary Button</Button>);
         const buttonElement = screen.getByText(/Primary Button/i);
         expect(buttonElement).toBeInTheDocument();
-        expect(buttonElement).toHaveClass('bg-lowOrange');
+        expect(buttonElement).toHaveClass("bg-[rgba(235, 173, 124, 0.75)]");
     });
 
     test('renders with secondary variant', () => {

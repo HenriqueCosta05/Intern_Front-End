@@ -9,7 +9,7 @@ export default function Container({
   ...props
 }: ContainerProps) {
   return (
-    <div className={cn(className, "bg-lowOrange w-full min-h-screen h-screen flex justify-center items-center flex-col")} data-testid="container">
+    <div className={cn(className, "bg-lowOrange w-full min-h-screen flex justify-center items-center flex-col gap-16 py-32")} data-testid="container">
       {children}
     </div>
   );
