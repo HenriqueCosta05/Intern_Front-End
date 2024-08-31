@@ -1,8 +1,8 @@
 
-export default function Notes() {
+export default function Notes({ className }) {
   return (
     <svg
-      className="absolute top-10 right-10"
+      className={className}
       width="41"
       height="51"
       viewBox="0 0 41 51"

@@ -1,8 +1,8 @@
 
-export default function Checklist() {
+export default function Checklist({ className }) {
   return (
     <svg
-      className="absolute top-10 left-10"
+      className={className}
       width="60"
       height="60"
       viewBox="0 0 60 60"

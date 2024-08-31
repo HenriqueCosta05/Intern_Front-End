@@ -1,8 +1,8 @@
 
-export default function Notification() {
+export default function Notification({className}) {
   return (
     <svg
-      className="absolute bottom-10 right-10"
+      className={className}
       width="60"
       height="60"
       viewBox="0 0 60 60"

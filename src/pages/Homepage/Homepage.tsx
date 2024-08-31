@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {Button, ButtonGroup, Card, Container, Header } from "../../components";
 import features from '../../data/features.json'
 import intro from '../../data/intro.json'
@@ -13,17 +14,21 @@ export default function Homepage() {
   
   return (
     <Container className="relative">
-        <NotificationIcon />
-        <NotesIcon />
-        <ChecklistIcon />
+      <NotificationIcon className="absolute bottom-10 right-10" />
+      <NotesIcon className="absolute top-10 right-10" />
+      <ChecklistIcon className="absolute top-10 left-10" />
       <div className="flex justify-start flex-col w-10/12 gap-4">
         <Header.Title>{intro.data.title}</Header.Title>
         <Header.Description>{intro.data.description}</Header.Description>
       </div>
-      
+
       <ButtonGroup>
-        <Button>Cadastre-se já!</Button>
-        <Button>Login</Button>
+        <Button>
+          <Link to="/auth/register">Cadastre-se já!</Link>
+        </Button>
+        <Button>
+          <Link to="/auth/login">Login</Link>
+        </Button>
       </ButtonGroup>
 
       <div className="flex items-center justify-center gap-4 w-full flex-wrap">
