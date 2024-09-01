@@ -4,3 +4,7 @@ export { default as QuickIcon } from './Quick/Quick';
 export { default as NotificationIcon } from './Notification/Notification';
 export { default as NotesIcon } from './Notes/Notes';
 export { default as ChecklistIcon } from './Checklist/Checklist';
+export { default as SettingsIcon } from './Settings/Settings';
+export { default as HomeIcon } from './Home/Home';
+export { default as NewIcon } from './New/New';
+export { default as LogoutIcon } from './Logout/Logout';
