@@ -3,10 +3,11 @@ import { cn } from "../../utils/cn";
 
 type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
     variant?: 'primary' | 'secondary';
+    type?: 'submit' | 'reset' | 'button';
     }
 export default function Button({className, variant, ...props}: ButtonProps) {
     return (
-        <button {...props} className={cn(buttonVariants({variant}), className)}/>
+        <button {...props} className={cn(buttonVariants({ variant }), className)} type={props.type} />
   )
 }
 
