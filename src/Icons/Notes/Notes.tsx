@@ -1,5 +1,5 @@
 
-export default function Notes({ className }) {
+export default function Notes({ className }: { className: string }) {
   return (
     <svg
       className={className}

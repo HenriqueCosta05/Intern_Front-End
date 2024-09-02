@@ -1,5 +1,5 @@
 
-export default function Notification({className}) {
+export default function Notification({className}: {className: string}) {
   return (
     <svg
       className={className}

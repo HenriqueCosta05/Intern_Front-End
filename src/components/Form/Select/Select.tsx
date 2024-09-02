@@ -1,13 +1,12 @@
 import { cn } from "../../../utils/cn";
 
 interface SelectProps extends React.HTMLProps<HTMLSelectElement> {
-  value: string;
+  children: React.ReactNode;
 }
 
 export default function Select({
-  value,
-  onChange,
   className,
+  children,
   ...props
 }: SelectProps) {
   return (
@@ -16,9 +15,10 @@ export default function Select({
         className,
         "w-11/12 py-2 rounded-md border-2 border-[rgba(150, 75, 0, 50%)"
       )}
-      onChange={onChange}
-      value={value}
+      
       {...props}
-    />
+    >
+      {children}
+      </select>
   );
 }
