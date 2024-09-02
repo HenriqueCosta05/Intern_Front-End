@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, Login, NotFound, Register, TaskManager } from "./pages";
+import { Home, Login, NotFound, Register, TaskForm, TaskManager } from "./pages";
 
 export default function App() {
   return (
@@ -10,6 +10,7 @@ export default function App() {
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
         <Route path="/app/task-manager" element={<TaskManager />} />
+        <Route path="/app/new-task" element={<TaskForm />} />
       </Routes>
     </BrowserRouter>
 

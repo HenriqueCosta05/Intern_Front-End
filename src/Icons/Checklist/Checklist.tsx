@@ -1,5 +1,5 @@
 
-export default function Checklist({ className }) {
+export default function Checklist({ className }: { className: string }) {
   return (
     <svg
       className={className}

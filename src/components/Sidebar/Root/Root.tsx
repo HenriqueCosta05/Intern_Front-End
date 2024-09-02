@@ -12,7 +12,7 @@ export default function Root({className, children, ...props }: RootProps) {
     <div
       className={cn(
         className,
-        isOpen ? "w-[60vw] lg:w-[20vw] bg-lowOrange h-screen min-h-screen text-white" : "w-[20vw] lg:w-[5vw] bg-lowOrange h-screen min-h-screen text-white"
+        isOpen ? "w-[60vw] lg:w-[20vw] bg-lowOrange h-screen min-h-screen text-white" : "w-[20vw] lg:w-[10vw] bg-lowOrange h-screen min-h-screen text-white"
       )}
       {...props}
     >

@@ -3,12 +3,12 @@ import Table from "../../components/Table";
 import { SidebarProvider, useSidebar } from "../../context";
 import { HomeIcon, LogoutIcon, NewIcon, SettingsIcon } from "../../Icons";
 
-function SidebarComponent() {
+export function SidebarComponent() {
   const { toggleSidebar, isOpen } = useSidebar();
   return (
-    <Sidebar.Root className="transition-all">
+    <Sidebar.Root className="transition-all flex flex-col items-center justify-between py-4">
       <Sidebar.Toggle onClick={toggleSidebar} />
-      <div className="flex space-y-16 flex-col h-3/4">
+      <div className="flex flex-col space-y-16 justify-center">
         <Sidebar.Item
           className={`flex flex-nowrap space-x-2 font-bold my-6 ${
             isOpen ? "justify-center items-center space-x-3" : "justify-end"
@@ -28,7 +28,7 @@ function SidebarComponent() {
           <p className={isOpen ? "" : "hidden"}>Nova Tarefa</p>
         </Sidebar.Item>
       </div>
-      <div className="space-y-4">
+      <div className="flex flex-col space-y-4 justify-center">
         <Sidebar.Item
           className={`flex flex-nowrap space-x-2 font-bold ${
             isOpen ? "justify-center items-center space-x-3" : "justify-end"
@@ -102,7 +102,7 @@ function TaskManagerContent() {
 export default function TaskManager() {
   return (
     <SidebarProvider>
-      <div className="flex h-screen">
+      <div className="flex h-full">
         <SidebarComponent />
         <TaskManagerContent />
       </div>
