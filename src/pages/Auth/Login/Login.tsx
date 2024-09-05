@@ -3,10 +3,11 @@ import { Container, Form } from "../../../components";
 import { AuthProvider } from "../../../context";
 import { useAuth } from "../../../hooks";
 import { ChecklistIcon, NotesIcon, NotificationIcon } from "../../../Icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const { login, user } = useAuth();
+  const navigate = useNavigate();
+  const { login, user, errors } = useAuth();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -16,14 +17,16 @@ export default function Login() {
 
     if (user) return;
     if (email && password && !user) {
-      login(email, password);
+      login(email, password, () => {
+        navigate("/app/task-manager");
+      });
     } else {
-      console.error("Email or password is missing");
     }
   };
 
-  useEffect(() => {}, [login, user]);
-
+  useEffect(() => {
+    
+  }, [login, user, errors]);
   return (
     <AuthProvider>
       <div className="absolute h-[50vh] bg-[#F5F5F5] w-full z-10"></div>
@@ -70,6 +73,13 @@ export default function Login() {
           <Form.Button type="submit" className="bg-brown">
             Entrar
           </Form.Button>
+          {errors && (
+            <p className="text-red-500 text-center block">
+              {Array.from(errors).map((error) => (
+                <span key={error}>{error}</span>
+              ))}
+            </p>
+          )}
         </Form.Root>
       </Container>
       <NotificationIcon className="absolute bottom-12 left-6" />

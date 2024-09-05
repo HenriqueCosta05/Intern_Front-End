@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { User } from "../../../@types";
 import { Container, Form } from "../../../components";
 import { AuthProvider } from "../../../context";
@@ -6,6 +6,7 @@ import { useAuth } from "../../../hooks";
 import { ChecklistIcon, NotesIcon, NotificationIcon } from "../../../Icons";
 
 export default function Register() {
+  const navigate = useNavigate();
   const { register, user, errors} = useAuth();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -21,7 +22,13 @@ export default function Register() {
       return;
     }
 
-    register(data as User);
+    if(data) {
+      register(data as User, () => {
+        alert("Cadastro realizado com sucesso!");
+        navigate('/app/task-manager');
+      })
+    }
+    
   }
   return (
     <AuthProvider>
