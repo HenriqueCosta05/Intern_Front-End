@@ -1,9 +1,30 @@
+import { Link } from "react-router-dom";
+import { User } from "../../../@types";
 import { Container, Form } from "../../../components";
+import { AuthProvider } from "../../../context";
+import { useAuth } from "../../../hooks";
 import { ChecklistIcon, NotesIcon, NotificationIcon } from "../../../Icons";
 
 export default function Register() {
+  const { register, user, errors} = useAuth();
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data: { [key: string]: string } = {};
+    
+    formData.forEach((value, key) => {
+      data[key] = value as string;
+    });
+    
+    if(data.password !== data["confirm-password"]) {
+      alert("As senhas não conferem");
+      return;
+    }
+
+    register(data as User);
+  }
   return (
-    <>
+    <AuthProvider>
       <div className="absolute h-[50vh] bg-[#F5F5F5] w-full z-10"></div>
 
       <Container className="flex h-screen py-8 lg:p-0">
@@ -13,15 +34,20 @@ export default function Register() {
         <Form.Root
           className="lg:w-1/2 drop-shadow-md bg-white lg:absolute lg:top-10 lg:right-10 z-20 rounded-lg w-11/12 lg:p-16 p-4 space-y-4 m-auto"
           method="POST"
+          onSubmit={handleSubmit}
         >
           <h2 className="text-4xl font-bold text-brown w-fit mx-auto">
             Cadastre-se
           </h2>
+          <Link to="/auth/login" className="text-center block text-brown">
+            Já tem conta? <span className="text-blue-400">Faça login</span>
+          </Link>
           <Form.Label htmlFor="nome" className="font-extrabold block">
             Nome: *
           </Form.Label>
           <Form.Input
             type="text"
+            name="name"
             placeholder="Digite aqui seu nome..."
             id="nome"
             className="placeholder:font-extrabold indent-4 outline-2 outline-lowOrange"
@@ -32,6 +58,7 @@ export default function Register() {
           </Form.Label>
           <Form.Input
             id="telefone"
+            name="phone_number"
             className="placeholder:font-extrabold indent-4 outline-2 outline-lowOrange"
             placeholder="Digite aqui seu telefone..."
             pattern="^\s*(\d{2}|\d{0})[-. ]?(\d{5}|\d{4})[-. ]?(\d{4})[-. ]?\s*$"
@@ -42,6 +69,7 @@ export default function Register() {
           </Form.Label>
           <Form.Input
             type="email"
+            name="email"
             placeholder="Digite aqui seu e-mail..."
             id="email"
             className="placeholder:font-extrabold indent-4 outline-2 outline-lowOrange"
@@ -54,6 +82,7 @@ export default function Register() {
           </Form.Label>
           <Form.Input
             type="password"
+            name="password"
             placeholder="Digite aqui sua senha..."
             className="placeholder:font-extrabold indent-4 outline-2 outline-lowOrange"
             id="password"
@@ -70,17 +99,25 @@ export default function Register() {
             className="placeholder:font-extrabold indent-4 outline-2 outline-lowOrange"
             id="confirm-password"
             pattern=".{6,}"
+            name="confirm-password"
             title="A senha deve ter no mínimo 6 caracteres"
             required
           />
           <Form.Button type="submit" className="bg-brown">
             Cadastrar
           </Form.Button>
+          {errors && (
+            <p className="text-red-500 text-center">
+              {errors.map((error) => (
+                <span key={error}>{error}</span>
+              ))}
+            </p>
+          )}
         </Form.Root>
       </Container>
       <NotificationIcon className="absolute bottom-12 left-6" />
       <NotesIcon className="absolute bottom-6 right-6" />
       <ChecklistIcon className="absolute bottom-1/4 left-1/3" />
-    </>
+    </AuthProvider>
   );
 }
