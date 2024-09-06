@@ -15,18 +15,13 @@ export default function Login() {
     const email = formData.get("email") as string | null;
     const password = formData.get("password") as string | null;
 
-    if (user) return;
-    if (email && password && !user) {
+    if (email && password) {
       login(email, password, () => {
         navigate("/app/task-manager");
       });
-    } else {
-    }
+    } 
   };
 
-  useEffect(() => {
-    
-  }, [login, user, errors]);
   return (
     <AuthProvider>
       <div className="absolute h-[50vh] bg-[#F5F5F5] w-full z-10"></div>
