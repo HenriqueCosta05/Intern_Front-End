@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { Container, Form } from "../../../components";
-import { AuthProvider } from "../../../context";
 import { useAuth } from "../../../hooks";
 import { ChecklistIcon, NotesIcon, NotificationIcon } from "../../../Icons";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,20 +13,16 @@ export default function Login() {
     const email = formData.get("email") as string | null;
     const password = formData.get("password") as string | null;
 
-    if (user) return;
-    if (email && password && !user) {
+    if (email && password) {
       login(email, password, () => {
+        alert("Login realizado com sucesso!");
         navigate("/app/task-manager");
       });
-    } else {
-    }
+    } 
   };
 
-  useEffect(() => {
-    
-  }, [login, user, errors]);
   return (
-    <AuthProvider>
+    <>
       <div className="absolute h-[50vh] bg-[#F5F5F5] w-full z-10"></div>
 
       <Container className="flex h-screen">
@@ -85,6 +79,6 @@ export default function Login() {
       <NotificationIcon className="absolute bottom-12 left-6" />
       <NotesIcon className="absolute bottom-6 right-6" />
       <ChecklistIcon className="absolute bottom-1/4 left-1/3" />
-    </AuthProvider>
+    </>
   );
 }

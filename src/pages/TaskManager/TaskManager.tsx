@@ -1,7 +1,9 @@
 import { Button, Sidebar } from "../../components";
 import Table from "../../components/Table";
-import { SidebarProvider, useSidebar } from "../../context";
+import { AuthProvider, SidebarProvider, useSidebar } from "../../context";
+import { useAuth, useFetch } from "../../hooks";
 import { HomeIcon, LogoutIcon, NewIcon, SettingsIcon } from "../../Icons";
+import { Task } from "../../@types/Task";
 
 export function SidebarComponent() {
   const { toggleSidebar, isOpen } = useSidebar();
@@ -53,13 +55,43 @@ export function SidebarComponent() {
 }
 
 function TaskManagerContent() {
+  const { user } = useAuth();
+  const { data, get} = useFetch();
+
+  const fetchTasks = async () => {
+    if (user) {
+      try {
+        await get("task");
+      } catch (error) {
+        console.error("Erro ao buscar as tarefas:", error);
+      }
+    }
+  };
+
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full">
+        <p>Usuário não autenticado. Por favor, faça login.</p>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full">
+        <p>Carregando tarefas...</p>
+      </div>
+    );
+  }
+
+
   return (
     <div className="flex flex-col items-center justify-start ml-16 flex-1 h-full">
       <h1 className="text-3xl lg:text-5xl text-brown font-bold my-16">
         Gerenciamento de Tarefas
       </h1>
       <div className="overflow-x-auto w-full">
-        <Table.Root className="border-collapse border border-gray-300 w-[150%]"> 
+        <Table.Root className="border-collapse border border-gray-300 w-[150%]">
           <Table.Row className="bg-[rgba(150,75,0,0.5)]">
             <Table.Header className="border border-gray-300 p-2">
               Título
@@ -74,25 +106,33 @@ function TaskManagerContent() {
               Ações
             </Table.Header>
           </Table.Row>
-          <Table.Row>
-            <Table.Data className="border border-gray-300 p-2">
-              Nome da Tarefa
-            </Table.Data>
-            <Table.Data className="border border-gray-300 p-2">
-              Descrição da Tarefa
-            </Table.Data>
-            <Table.Data className="border border-gray-300 p-2">
-              Concluída
-            </Table.Data>
-            <Table.Data className="border border-gray-300 p-2">
-              <Button className="bg-green-500 text-white rounded-md">
-                Editar
-              </Button>
-              <Button className="bg-red-500 text-white rounded-md ">
-                Excluir
-              </Button>
-            </Table.Data>
-          </Table.Row>
+          {(data as Task[]).map((task: Task) => (
+            <Table.Row key={task.id} className="bg-gray-100">
+              <Table.Data className="border border-gray-300 p-2">
+                {task.title}
+              </Table.Data>
+              <Table.Data className="border border-gray-300 p-2">
+                {task.description}
+              </Table.Data>
+              <Table.Data className="border border-gray-300 p-2">
+                {task.status}
+              </Table.Data>
+              <Table.Data className="border border-gray-300 p-2">
+                <Button
+                  className="bg-blue-500 text-white"
+                  onClick={() => console.log("Editar tarefa", task.id)}
+                >
+                  Editar
+                </Button>
+                <Button
+                  className="bg-red-500 text-white"
+                  onClick={() => console.log("Excluir tarefa", task.id)}
+                >
+                  Excluir
+                </Button>
+              </Table.Data>
+            </Table.Row>
+          ))}
         </Table.Root>
       </div>
     </div>
@@ -101,11 +141,11 @@ function TaskManagerContent() {
 
 export default function TaskManager() {
   return (
-    <SidebarProvider>
-      <div className="flex h-full">
-        <SidebarComponent />
-        <TaskManagerContent />
-      </div>
-    </SidebarProvider>
+      <SidebarProvider>
+        <div className="flex h-full">
+          <SidebarComponent />
+          <TaskManagerContent />
+        </div>
+      </SidebarProvider>
   );
 }
