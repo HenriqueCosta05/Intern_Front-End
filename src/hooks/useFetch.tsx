@@ -23,7 +23,9 @@ export default function useFetch() {
     
     function post(url: string, data: unknown) {
         
-        axios.post(`${API_URL}/${url}`, data)
+        axios.post(`${API_URL}/${url}`, data, {
+            withCredentials: true,
+        })
             .then(response => {
                 setData(response.data);
                 

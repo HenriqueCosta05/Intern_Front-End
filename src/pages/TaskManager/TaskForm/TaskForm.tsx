@@ -20,18 +20,17 @@ function TaskFormContent() {
   const { post, isLoading, errors, data } = useFetch();
 
   function handleCreateTask(event: React.FormEvent<HTMLFormElement>) {
+    console.log(user)
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
     const task = {
-      id: Math.random().toString(36).substr(2, 9),
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       status: formData.get("status") as string,
       user: user,
-      userId: user?.user_id,
     };
-    post("/task", task);
+    post("task", task);
     return data;
   }
   return (
@@ -39,7 +38,8 @@ function TaskFormContent() {
       <h1 className="text-3xl lg:text-5xl text-brown font-bold my-16">
         Nova Tarefa
       </h1>
-      <Form.Root className="w-11/12 bg-[#F5F5F5] drop-shadow-md p-2 lg:p-8 space-y-4">
+      <Form.Root className="w-11/12 bg-[#F5F5F5] drop-shadow-md p-2 lg:p-8 space-y-4"
+      onSubmit={handleCreateTask}>
         <Form.Label className="font-extrabold block">Título: *</Form.Label>
         <Form.Input
           type="text"
