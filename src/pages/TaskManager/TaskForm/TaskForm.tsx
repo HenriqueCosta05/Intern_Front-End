@@ -20,7 +20,6 @@ function TaskFormContent() {
   const { post, isLoading, errors, data } = useFetch();
 
   function handleCreateTask(event: React.FormEvent<HTMLFormElement>) {
-    console.log(user)
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
@@ -31,6 +30,7 @@ function TaskFormContent() {
       user: user,
     };
     post("task", task);
+    alert("Tarefa criada com sucesso!");
     return data;
   }
   return (
@@ -64,9 +64,9 @@ function TaskFormContent() {
           <option value="" disabled selected hidden>
             Selecione o status...
           </option>
-          <option value="OPEN">Em aberto</option>
-          <option value="IN_PROGRESS">Em andamento</option>
-          <option value="DONE">Concluída</option>
+          <option value="Em aberto">Em aberto</option>
+          <option value="Em andamento">Em andamento</option>
+          <option value="Concluída">Concluída</option>
         </Form.Select>
         <Form.Button
           type="submit"

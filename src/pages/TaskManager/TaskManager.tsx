@@ -4,6 +4,7 @@ import { AuthProvider, SidebarProvider, useSidebar } from "../../context";
 import { useAuth, useFetch } from "../../hooks";
 import { HomeIcon, LogoutIcon, NewIcon, SettingsIcon } from "../../Icons";
 import { Task } from "../../@types/Task";
+import { useEffect } from "react";
 
 export function SidebarComponent() {
   const { toggleSidebar, isOpen } = useSidebar();
@@ -61,12 +62,17 @@ function TaskManagerContent() {
   const fetchTasks = async () => {
     if (user) {
       try {
-        await get("task");
+        const tasks = await get("task");
+        return tasks;
       } catch (error) {
         console.error("Erro ao buscar as tarefas:", error);
       }
     }
   };
+
+  useEffect(() => {
+    fetchTasks();
+  }, [user])
 
   if (!user) {
     return (
