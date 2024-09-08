@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import { User } from "../../../@types";
 import { Container, Form } from "../../../components";
 import { AuthProvider } from "../../../context";
 import { useAuth } from "../../../hooks";
@@ -7,7 +6,7 @@ import { ChecklistIcon, NotesIcon, NotificationIcon } from "../../../Icons";
 
 export default function Register() {
   const navigate = useNavigate();
-  const { register, user, errors} = useAuth();
+  const { register, user, error} = useAuth();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -23,7 +22,7 @@ export default function Register() {
     }
 
     if(data) {
-      register(data as User, () => {
+      register(data.name, data.email, data.phone_number, data.password, () => {
         alert("Cadastro realizado com sucesso!");
         navigate('/app/task-manager');
       })
@@ -31,9 +30,8 @@ export default function Register() {
     
   }
   return (
-    <AuthProvider>
+    <>
       <div className="absolute h-[50vh] bg-[#F5F5F5] w-full z-10"></div>
-
       <Container className="flex h-screen py-8 lg:p-0">
         <h1 className="text-4xl md:text-5xl font-bold text-brown-700 mb-8 lg:absolute lg:left-16 lg:top-16 z-20 lg:w-[22%]">
           Seja <span className="text-amber-600">bem-vindo(a)</span>!
@@ -113,11 +111,9 @@ export default function Register() {
           <Form.Button type="submit" className="bg-brown">
             Cadastrar
           </Form.Button>
-          {errors && (
-            <p className="text-red-500 text-center">
-              {errors.map((error) => (
-                <span key={error}>{error}</span>
-              ))}
+          {error && (
+            <p key={error} className="text-red-500 text-center">
+              {error}
             </p>
           )}
         </Form.Root>
@@ -125,6 +121,5 @@ export default function Register() {
       <NotificationIcon className="absolute bottom-12 left-6" />
       <NotesIcon className="absolute bottom-6 right-6" />
       <ChecklistIcon className="absolute bottom-1/4 left-1/3" />
-    </AuthProvider>
-  );
+    </>);
 }

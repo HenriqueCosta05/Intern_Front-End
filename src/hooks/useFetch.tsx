@@ -1,21 +1,22 @@
 import axios from "axios";
 import { useState } from "react";
+import { Task } from "../@types/Task";
 
 export default function useFetch() {
     const API_URL = "http://localhost:3000"
 
-    const [data, setData] = useState<unknown>([]);
-    const [errors, setErrors] = useState<string[]>([]);
+    const [data, setData] = useState<Task | unknown>([]);
+    const [error, setError] = useState<string>("");
 
     function get(url: string) {
         
-        axios.get(`${API_URL}/${url}`)
+        axios.get(`${API_URL}/${url}`, { withCredentials: true })
             .then(response => {
                 setData(response.data);
                 
             }).catch(error => {
                 const errorMessage = error.response?.data?.message || error.message || "Ocorreu um erro desconhecido.";
-                setErrors([errorMessage]);
+                setError(errorMessage);
                 
             });
     }
@@ -28,14 +29,14 @@ export default function useFetch() {
                 
             }).catch(error => {
                 const errorMessage = error.response?.data?.message || error.message || "Ocorreu um erro desconhecido.";
-                setErrors([errorMessage]);
+                setError(errorMessage);
                 
             });
     }
 
     return {
         data,
-        errors,
+        error,
         get,
         post
     }

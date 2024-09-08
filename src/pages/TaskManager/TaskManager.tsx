@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Button, Sidebar } from "../../components";
 import Table from "../../components/Table";
 import { AuthProvider, SidebarProvider, useSidebar } from "../../context";
@@ -57,23 +56,17 @@ export function SidebarComponent() {
 
 function TaskManagerContent() {
   const { user } = useAuth();
-  const { get, isLoading, errors, data } = useFetch();
+  const { data, get} = useFetch();
 
   const fetchTasks = async () => {
     if (user) {
       try {
-        await get("/task");
+        await get("task");
       } catch (error) {
         console.error("Erro ao buscar as tarefas:", error);
       }
     }
   };
-
-  useEffect(() => {
-    if (user) {
-      fetchTasks();
-    }
-  }, [user]); 
 
   if (!user) {
     return (
@@ -83,13 +76,14 @@ function TaskManagerContent() {
     );
   }
 
-  if (isLoading) {
+  if (!data) {
     return (
       <div className="flex flex-col items-center justify-center h-full">
         <p>Carregando tarefas...</p>
       </div>
     );
   }
+
 
   return (
     <div className="flex flex-col items-center justify-start ml-16 flex-1 h-full">
@@ -112,28 +106,33 @@ function TaskManagerContent() {
               Ações
             </Table.Header>
           </Table.Row>
-          {data &&
-            data.map((task: Task) => (
-              <Table.Row key={task.id} className="bg-[rgba(150,75,0,0.1)]">
-                <Table.Data className="border border-gray-300 p-2">
-                  {task.title}
-                </Table.Data>
-                <Table.Data className="border border-gray-300 p-2">
-                  {task.description}
-                </Table.Data>
-                <Table.Data className="border border-gray-300 p-2">
-                  {task.status}
-                </Table.Data>
-                <Table.Data className="border border-gray-300 p-2">
-                  <Button className="bg-brown text-white p-2 rounded-md">
-                    Editar
-                  </Button>
-                  <Button className="bg-red-500 text-white p-2 rounded-md">
-                    Excluir
-                  </Button>
-                </Table.Data>
-              </Table.Row>
-            ))}
+          {(data as Task[]).map((task: Task) => (
+            <Table.Row key={task.id} className="bg-gray-100">
+              <Table.Data className="border border-gray-300 p-2">
+                {task.title}
+              </Table.Data>
+              <Table.Data className="border border-gray-300 p-2">
+                {task.description}
+              </Table.Data>
+              <Table.Data className="border border-gray-300 p-2">
+                {task.status}
+              </Table.Data>
+              <Table.Data className="border border-gray-300 p-2">
+                <Button
+                  className="bg-blue-500 text-white"
+                  onClick={() => console.log("Editar tarefa", task.id)}
+                >
+                  Editar
+                </Button>
+                <Button
+                  className="bg-red-500 text-white"
+                  onClick={() => console.log("Excluir tarefa", task.id)}
+                >
+                  Excluir
+                </Button>
+              </Table.Data>
+            </Table.Row>
+          ))}
         </Table.Root>
       </div>
     </div>
@@ -142,11 +141,11 @@ function TaskManagerContent() {
 
 export default function TaskManager() {
   return (
-    <SidebarProvider>
-      <div className="flex h-full">
-        <SidebarComponent />
-        <TaskManagerContent />
-      </div>
-    </SidebarProvider>
+      <SidebarProvider>
+        <div className="flex h-full">
+          <SidebarComponent />
+          <TaskManagerContent />
+        </div>
+      </SidebarProvider>
   );
 }
