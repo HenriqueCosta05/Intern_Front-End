@@ -99,6 +99,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const logout = () => {
+    axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
     setUser(null);
   };
 

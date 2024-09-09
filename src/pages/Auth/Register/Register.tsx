@@ -23,8 +23,8 @@ export default function Register() {
 
     if(data) {
       register(data.name, data.email, data.phone_number, data.password, () => {
-        alert("Cadastro realizado com sucesso!");
-        navigate('/app/task-manager');
+        alert("Cadastro realizado com sucesso! Faça Login para continuar!");
+        navigate('/auth/login');
       })
     }
     
