@@ -1,6 +1,6 @@
 import { Button, Sidebar } from "../../components";
 import Table from "../../components/Table";
-import { AuthProvider, SidebarProvider, useSidebar } from "../../context";
+import { SidebarProvider, useSidebar } from "../../context";
 import { useAuth, useFetch } from "../../hooks";
 import { HomeIcon, LogoutIcon, NewIcon, SettingsIcon } from "../../Icons";
 import { Task } from "../../@types";
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export function SidebarComponent() {
   const { toggleSidebar, isOpen } = useSidebar();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   return (
     <Sidebar.Root className="transition-all flex flex-col items-center justify-between py-4">
       <Sidebar.Toggle onClick={toggleSidebar} />
@@ -47,7 +47,8 @@ export function SidebarComponent() {
           className={`flex flex-nowrap space-x-2 font-bold ${
             isOpen ? "justify-center items-center space-x-3" : "justify-end"
           }`}
-          href="/app/logout"
+          onClick={() => {logout()} }
+          href="/"
         >
           <LogoutIcon className="w-7 h-7" />
           <p className={isOpen ? "" : "hidden"}>Sair do App</p>
