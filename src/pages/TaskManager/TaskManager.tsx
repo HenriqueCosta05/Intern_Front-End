@@ -3,10 +3,13 @@ import Table from "../../components/Table";
 import { AuthProvider, SidebarProvider, useSidebar } from "../../context";
 import { useAuth, useFetch } from "../../hooks";
 import { HomeIcon, LogoutIcon, NewIcon, SettingsIcon } from "../../Icons";
-import { Task } from "../../@types/Task";
+import { Task } from "../../@types";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function SidebarComponent() {
   const { toggleSidebar, isOpen } = useSidebar();
+  const { user } = useAuth();
   return (
     <Sidebar.Root className="transition-all flex flex-col items-center justify-between py-4">
       <Sidebar.Toggle onClick={toggleSidebar} />
@@ -35,7 +38,7 @@ export function SidebarComponent() {
           className={`flex flex-nowrap space-x-2 font-bold ${
             isOpen ? "justify-center items-center space-x-3" : "justify-end"
           }`}
-          href="/app/my-account"
+          href={`/app/my-account/${user?.user_id}`}
         >
           <SettingsIcon className="w-7 h-7" />
           <p className={isOpen ? "" : "hidden"}>Configurações</p>
@@ -55,18 +58,25 @@ export function SidebarComponent() {
 }
 
 function TaskManagerContent() {
+  const navigate = useNavigate();
   const { user } = useAuth();
-  const { data, get} = useFetch();
+  const { data, get, del} = useFetch();
 
   const fetchTasks = async () => {
     if (user) {
       try {
-        await get("task");
+        const tasks = await get("task");
+        return tasks;
       } catch (error) {
         console.error("Erro ao buscar as tarefas:", error);
       }
     }
   };
+  
+
+  useEffect(() => {
+    fetchTasks();
+  }, [user])
 
   if (!user) {
     return (
@@ -106,8 +116,8 @@ function TaskManagerContent() {
               Ações
             </Table.Header>
           </Table.Row>
-          {(data as Task[]).map((task: Task) => (
-            <Table.Row key={task.id} className="bg-gray-100">
+          {Object.values(data).map((task: Task) => (
+            <Table.Row key={task.task_id} className="bg-gray-100">
               <Table.Data className="border border-gray-300 p-2">
                 {task.title}
               </Table.Data>
@@ -120,13 +130,13 @@ function TaskManagerContent() {
               <Table.Data className="border border-gray-300 p-2">
                 <Button
                   className="bg-blue-500 text-white"
-                  onClick={() => console.log("Editar tarefa", task.id)}
+                  onClick={() => navigate(`/app/edit-task/${task.task_id}`)}
                 >
                   Editar
                 </Button>
                 <Button
                   className="bg-red-500 text-white"
-                  onClick={() => console.log("Excluir tarefa", task.id)}
+                  onClick={() => del(`task/${task.task_id}`)}
                 >
                   Excluir
                 </Button>
