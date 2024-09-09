@@ -4,7 +4,7 @@ import { SidebarProvider } from "../../../context";
 import { useAuth, useFetch } from "../../../hooks";
 import { SidebarComponent } from "../TaskManager";
 import { Task, User } from "../../../@types";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function TaskForm() {
   return (
@@ -18,6 +18,7 @@ export default function TaskForm() {
 }
 
 function TaskFormContent() {
+  const navigate = useNavigate()
   const { user } = useAuth();
   const { task_id } = useParams<{ task_id: string }>();
 
@@ -64,6 +65,7 @@ function TaskFormContent() {
     } else {
       post("task", updatedTask)
         .then(() => alert("Tarefa criada com sucesso!"))
+        .then(() => navigate("/app/task-manager"))
         .catch((err) => console.error("Error creating task:", err));
     }
   }
