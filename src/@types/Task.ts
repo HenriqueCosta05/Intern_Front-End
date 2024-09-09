@@ -1,10 +1,10 @@
 import { User } from ".";
 
 export type Task = {
-    id: string;
+    task_id: string;
     title: string;
     description: string;
-    status: "OPEN" | "IN_PROGRESS" | "DONE";
+    status: string;
     user: User;
-    userId: string;
+    user_id: string;
 };

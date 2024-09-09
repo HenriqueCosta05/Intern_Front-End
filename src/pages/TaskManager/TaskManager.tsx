@@ -5,6 +5,7 @@ import { useAuth, useFetch } from "../../hooks";
 import { HomeIcon, LogoutIcon, NewIcon, SettingsIcon } from "../../Icons";
 import { Task } from "../../@types/Task";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function SidebarComponent() {
   const { toggleSidebar, isOpen } = useSidebar();
@@ -56,8 +57,9 @@ export function SidebarComponent() {
 }
 
 function TaskManagerContent() {
+  const navigate = useNavigate();
   const { user } = useAuth();
-  const { data, get} = useFetch();
+  const { data, get } = useFetch();
 
   const fetchTasks = async () => {
     if (user) {
@@ -112,7 +114,7 @@ function TaskManagerContent() {
               Ações
             </Table.Header>
           </Table.Row>
-          {(data as Task[]).map((task: Task) => (
+          {Object.values(data).map((task: Task) => (
             <Table.Row key={task.id} className="bg-gray-100">
               <Table.Data className="border border-gray-300 p-2">
                 {task.title}
@@ -126,13 +128,13 @@ function TaskManagerContent() {
               <Table.Data className="border border-gray-300 p-2">
                 <Button
                   className="bg-blue-500 text-white"
-                  onClick={() => console.log("Editar tarefa", task.id)}
+                  onClick={() => navigate(`/app/edit-task/${task.task_id}`)}
                 >
                   Editar
                 </Button>
                 <Button
                   className="bg-red-500 text-white"
-                  onClick={() => console.log("Excluir tarefa", task.id)}
+                  onClick={() => console.log("Excluir tarefa", task.task_id)}
                 >
                   Excluir
                 </Button>

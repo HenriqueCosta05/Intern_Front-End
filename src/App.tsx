@@ -26,6 +26,7 @@ export default function App() {
         />
         <Route path="/app/task-manager" element={<AuthProvider><TaskManager /></AuthProvider>} />
         <Route path="/app/new-task" element={<AuthProvider><TaskForm /></AuthProvider>} />
+        <Route path="/app/edit-task/:task_id" element={<AuthProvider><TaskForm /></AuthProvider>} />
       </Routes>
     </BrowserRouter>
   );
